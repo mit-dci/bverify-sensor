@@ -18,7 +18,7 @@ RUN mv build /tmp/output/
 
 FROM golang:alpine
 RUN apk add --no-cache ca-certificates
-COPY --from=build /usr/local/go/src/github.com/mit-dci/bverify-sensor/web /app/bin/web
+COPY --from=build /usr/local/go/src/github.com/mit-dci/bverify-sensor/web/web /app/bin/web
 EXPOSE 8001
 WORKDIR /app/bin
 COPY --from=nodebuild /tmp/output/build /app/bin/static
