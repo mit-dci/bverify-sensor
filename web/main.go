@@ -13,11 +13,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rs/cors"
-
-	"github.com/mit-dci/go-bverify/wire"
-
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 var sensorFolder *string
@@ -125,7 +122,7 @@ func Readings(w http.ResponseWriter, r *http.Request) {
 			if err == nil {
 				timestamp, _ := strconv.ParseInt(strings.Split(f.Name(), "-")[0], 10, 64)
 
-				fs := wire.ForeignStatementFromBytes(fsBytes)
+				fs := ForeignStatementFromBytes(fsBytes)
 				r := Reading{
 					Base64Proof:     base64.StdEncoding.EncodeToString(fsBytes),
 					Statement:       fs.StatementPreimage,

@@ -20,6 +20,11 @@ class App extends Component {
       readings:[],
       proveReading: null
     };
+    
+    // Sorry
+    this.appStoreUrl = "https://www.youtube.com/watch?v=oHg5SJYRHA0";
+    this.playStoreUrl = "https://www.youtube.com/watch?v=oHg5SJYRHA0";
+
     this.baseUrl = "";
     if(window.location.host === "localhost:3000") {
       this.baseUrl = "http://localhost:8001/";
@@ -94,7 +99,7 @@ class App extends Component {
     return ( <Row>
       <Col xs={0} sm={1} md={2} lg={3}>&nbsp;</Col>
       <Col xs={12} sm={10} md={8} lg={4}>
-      <a href="#" onClick={((e) => { this.setState({activeSensor:""})})}>&lt; Back</a>
+      <Button onClick={((e) => { this.setState({activeSensor:""})})}>&lt; Back</Button>
       <h3>{sensor.name}</h3>
       {readings}
       <Modal isOpen={this.state.proveReading !== null} toggle={this.toggleProof} className={this.props.className}>
@@ -106,7 +111,14 @@ class App extends Component {
             <QRCode size={256} value={this.state.proveReading  === null ? "blah" : this.state.proveReading.Base64Proof} />
             <p>&nbsp;</p>
             <p>Scan the above QR code using the B_Verify app to independently verify the witnessing of the statement</p>
-
+            <Row>
+              <Col xs={6} className="text-center">
+                <a rel="noopener noreferrer" target="_blank" href={this.appStoreUrl}><img src="appstore.png" alt="App Store"></img></a>
+              </Col>
+              <Col xs={6} className="text-center">
+                <a rel="noopener noreferrer" target="_blank" href={this.playStoreUrl}><img src="playstore.png" alt="Play Store"></img></a>
+              </Col>
+            </Row>
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggleProof}>Close</Button>
@@ -131,34 +143,43 @@ class App extends Component {
       return (<Row key={s.id}>
         <Col xs={12}>
 
-          <a href="#" onClick={((e) => { this.showSensor(s.id); })}><b>{s.name}</b></a>
+          <button className="link-button"  onClick={((e) => { this.showSensor(s.id); })}><b>{s.name}</b></button>
           <p>{s.description}</p>
         </Col>
       </Row>)
     })
+
+    if( this.state.sensors.length == 0 ){
+      sensors = (<Row>
+        <Col xs={12}>
+
+          <p>Sorry, no sensors available</p>
+        </Col>
+      </Row>)
+    }
     
     var mainComponent;
 
     if(this.state.activeSensor === '') {
       mainComponent = (<Col>
       <Row>
-        <Col xs={0} sm={1} md={2} lg={3}>&nbsp;</Col>
+        <Col xs={0} sm={1} md={2} lg={4}>&nbsp;</Col>
         <Col xs={12} sm={10} md={8} lg={4}>
         <h3>What is this?</h3>
-        <p>This is a demonstration of what you can do using <a href="https://bverify.org/">B_Verify</a>. This demonstration shows you secure sensor readings that were witnessed to the Bitcoin blockchain. You can see the list of sensors in the top navigation. Each of these sensors has their readings witnessed by B_Verify, and posts the proofs for that witnessing to this website. Using the B_Verify Mobile App for <a href="https://">iOS</a> and <a href="https://">Android</a> you can independently verify these witness statements. Click on one of the sensors to view their data.</p>
+        <p>This is a demonstration of what you can do using <a href="https://bverify.org/">B_Verify</a>. This demonstration shows you secure sensor readings that were witnessed to the Bitcoin blockchain. You can see the list of sensors below this introduction. Each of these sensors has their readings witnessed by B_Verify, and posts the proofs for that witnessing to this website. Using the B_Verify Mobile App for <a href={this.appStoreUrl}>iOS</a> and <a href={this.playStoreUrl}>Android</a> you can independently verify these witness statements. Click on one of the sensors to view their data.</p>
       
         </Col>
-        <Col xs={0} sm={1}  md={2} lg={3}>&nbsp;</Col>
+        <Col xs={0} sm={1}  md={2} lg={4}>&nbsp;</Col>
       </Row>
       <Row>
-        <Col xs={0} sm={1} md={2} lg={3}>&nbsp;</Col>
+        <Col xs={0} sm={1} md={2} lg={4}>&nbsp;</Col>
         <Col xs={12} sm={10} md={8} lg={4}>
         <h3>Available sensors:</h3>
         
         {sensors}
       
         </Col>
-        <Col xs={0} sm={1}  md={2} lg={3}>&nbsp;</Col>
+        <Col xs={0} sm={1}  md={2} lg={4}>&nbsp;</Col>
       </Row>
       
         </Col>);
@@ -170,7 +191,7 @@ class App extends Component {
       <div className="App">
         <Navbar expand="xs">
             <NavbarBrand className="mx-auto" href="/">
-              <span className="nav-link" style={{color:'black'}}><b>Sensors powered by </b><img src="logo.png" /></span>
+              <span className="nav-link" style={{color:'black'}}><b>Sensors powered by </b><img alt="BVerify" src="logo.png" /></span>
             </NavbarBrand>
         </Navbar>
     {mainComponent}
