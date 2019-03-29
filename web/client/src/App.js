@@ -97,7 +97,7 @@ class App extends Component {
    
 
     return ( <Row>
-      <Col xs={0} sm={1} md={2} lg={3}>&nbsp;</Col>
+      <Col xs={0} sm={1} md={2} lg={4}>&nbsp;</Col>
       <Col xs={12} sm={10} md={8} lg={4}>
       <Button onClick={((e) => { this.setState({activeSensor:""})})}>&lt; Back</Button>
       <h3>{sensor.name}</h3>
@@ -105,6 +105,7 @@ class App extends Component {
       <Modal isOpen={this.state.proveReading !== null} toggle={this.toggleProof} className={this.props.className}>
           <ModalHeader>Statement proof</ModalHeader>
           <ModalBody>
+            <Col xs={12} className="text-center">
             <b>{this.state.proveReading === null ? "" : this.state.proveReading.Statement}</b><br/>
             <Moment fromNow>{new Date(this.state.proveReading  === null ? 0 : this.state.proveReading.SensorTimestamp * 1000)}</Moment>
             <p>&nbsp;</p>
@@ -119,13 +120,14 @@ class App extends Component {
                 <a rel="noopener noreferrer" target="_blank" href={this.playStoreUrl}><img src="playstore.png" alt="Play Store"></img></a>
               </Col>
             </Row>
+            </Col>
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggleProof}>Close</Button>
           </ModalFooter>
         </Modal>
       </Col>
-      <Col xs={0} sm={1}  md={2} lg={3}>&nbsp;</Col>
+      <Col xs={0} sm={1}  md={2} lg={4}>&nbsp;</Col>
     </Row>
     )
   }
